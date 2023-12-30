@@ -137,7 +137,6 @@ def main():
                     add_new_tile(board)
 
         draw_board(screen, board)
-        draw_score(screen, score)
         pygame.display.flip()
 
         if is_game_over(board):
