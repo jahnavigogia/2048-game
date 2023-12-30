@@ -111,7 +111,12 @@ def move_tiles(board, direction):
 
 # Function to check if the game is over
 def is_game_over(board):
-   pass
+    for i in range(GRID_SIZE):
+        for j in range(GRID_SIZE):
+            if board[i][j] == 0 or (j < GRID_SIZE - 1 and board[i][j] == board[i][j + 1]) or \
+                    (i < GRID_SIZE - 1 and board[i][j] == board[i + 1][j]):
+                return False
+    return True
 
 
 # Main function
@@ -142,7 +147,7 @@ def main():
                     add_new_tile(board)
 
         draw_board(screen, board)
-        draw_score(screen, board)
+        draw_score(screen, score)
         pygame.display.flip()
 
         if is_game_over(board):
@@ -151,6 +156,7 @@ def main():
             quit()
 
         clock.tick(FPS)
+
 
 if __name__ == "__main__":
     main()
