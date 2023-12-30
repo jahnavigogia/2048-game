@@ -39,6 +39,7 @@ TILE_COLORS = {
     2048: (237, 194, 46),
 }
 
+
 # Function to initialize the game board
 def initialize_board():
     board = [[0] * GRID_SIZE for _ in range(GRID_SIZE)]
@@ -66,6 +67,7 @@ def draw_board(screen, board):
             if value != 0:
                 draw_text(screen, str(value), (j * TILE_SIZE + TILE_SIZE // 2, i * TILE_SIZE + TILE_SIZE // 2))
 
+
 # Function to draw text on the screen
 def draw_text(screen, text, position):
     font = pygame.font.Font(None, FONT_SIZE)
@@ -76,7 +78,9 @@ def draw_text(screen, text, position):
 
 # Function to draw the score
 def draw_score(screen, score):
-    pass
+    font = pygame.font.Font(None, SCORE_FONT_SIZE)
+    text_surface = font.render("Score: {}".format(score), True, FONT_COLOR)
+    screen.blit(text_surface, (SCORE_OFFSET, SCORE_OFFSET))
 
 
 # Function to move the tiles in a given direction
@@ -109,6 +113,7 @@ def move_tiles(board, direction):
 def is_game_over(board):
    pass
 
+
 # Main function
 def main():
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -137,6 +142,7 @@ def main():
                     add_new_tile(board)
 
         draw_board(screen, board)
+        draw_score(screen, board)
         pygame.display.flip()
 
         if is_game_over(board):
