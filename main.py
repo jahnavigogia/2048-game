@@ -46,9 +46,15 @@ def initialize_board():
     add_new_tile(board)
     return board
 
+
 # Function to add a new tile to the board
 def add_new_tile(board):
-   pass
+    empty_cells = [(i, j) for i in range(GRID_SIZE) for j in range(GRID_SIZE) if board[i][j] == 0]
+    if empty_cells:
+        i, j = random.choice(empty_cells)
+        board[i][j] = 2 if random.random() < 0.9 else 4
+
+
 # Function to draw the game board
 def draw_board(screen, board):
     screen.fill(BACKGROUND_COLOR)
@@ -62,20 +68,47 @@ def draw_board(screen, board):
 
 # Function to draw text on the screen
 def draw_text(screen, text, position):
-    pass
+    font = pygame.font.Font(None, FONT_SIZE)
+    text_surface = font.render(text, True, FONT_COLOR)
+    text_rect = text_surface.get_rect(center=position)
+    screen.blit(text_surface, text_rect)
+
 
 # Function to draw the score
 def draw_score(screen, score):
-   pass
+    pass
+
 
 # Function to move the tiles in a given direction
 def move_tiles(board, direction):
-   pass
+    moved = False
+    dx, dy = direction
+
+    for i in range(GRID_SIZE):
+        for j in range(GRID_SIZE):
+            value = board[i][j]
+
+            if value != 0:
+                x, y = j, i
+
+                while 0 <= x + dx < GRID_SIZE and 0 <= y + dy < GRID_SIZE and board[y + dy][x + dx] == 0:
+                    board[y][x] = 0
+                    x, y = x + dx, y + dy
+
+                if 0 <= x + dx < GRID_SIZE and 0 <= y + dy < GRID_SIZE and board[y + dy][x + dx] == value:
+                    board[y][x] = 0
+                    board[y + dy][x + dx] = value * 2
+                    moved = True
+                else:
+                    board[y][x] = value
+
+    return moved
 
 
 # Function to check if the game is over
 def is_game_over(board):
    pass
+
 # Main function
 def main():
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
